@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Project Api</title>
+  <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/bootstrap/2.3.1/css/bootstrap.min.css" />
+  <style>
+    p {
+      margin: 0 0 0 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <table class="table table-bordered table-hover table-condensed">
+    <tr>
+      <th>#</th>
+      <th>HTTP</th>
+      <th>url</th>
+      <th>Desc</th>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <p class="text-center text-info">Resources</p>
+      </td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>get</td>
+      <td>/api/resources</td>
+      <td>List of all Resourse</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>get</td>
+      <td>/api/resources/:rid</td>
+      <td>Details of resource id :rid</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>post</td>
+      <td>/api/resources</td>
+      <td>Create new resource</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>put</td>
+      <td>/api/resources:rid</td>
+      <td>Update resource with id :rid</td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <p class="text-center text-info">Projects</p>
+      </td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>get</td>
+      <td>/api/projects</td>
+      <td>List all projects</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>get</td>
+      <td>/api/projects/:id</td>
+      <td>Details of project id :id</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>post</td>
+      <td>/api/projects</td>
+      <td>Create new project</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>put</td>
+      <td>/api/projects/:id</td>
+      <td>Update project with id :id</td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <p class="text-center text-info">Project Resources</p>
+      </td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>get</td>
+      <td>/api/projects/:pid/resources</td>
+      <td>Get all resources of project id :pid</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>get</td>
+      <td>/api/projects/:pid/resources/:rid</td>
+      <td>Get details of resources id: rid of project id :pid</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>post</td>
+      <td>/api/projects/:pid/resources</td>
+      <td>Add new resource to project id :pid</td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <p class="text-center text-info">Project Backlogs</p>
+      </td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>get</td>
+      <td>/api/projects/:pid/backlogs</td>
+      <td>Get all backlogs of project id :pid</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>get</td>
+      <td>/api/projects/:pid/backlogs/:bid</td>
+      <td>Get details of backlog id: bid of project id :pid</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>post</td>
+      <td>/api/projects/:pid/backlogs</td>
+      <td>Add new backlog to project id :pid</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>put</td>
+      <td>/api/projects/:pid/backlogs/:bid</td>
+      <td>Update backlog :bid of project id :pid</td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <p class="text-center text-info">Backlog Tasks</p>
+      </td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>get</td>
+      <td>/api/projects/:pid/backlogs/:bid/tasks</td>
+      <td>Get all tasks of backlog :bid of project id :pid</td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>get</td>
+      <td>/api/projects/:pid/backlogs/:bid/tasks/:tid</td>
+      <td>Get details of task :tid of backlog :bid of project id :pid</td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>post</td>
+      <td>/api/projects/:pid/backlogs/:bid/tasks</td>
+      <td>Create Task for backlog :bid of project id :pid</td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>put</td>
+      <td>/api/projects/:pid/backlogs/:bid/tasks/:tid</td>
+      <td>Update task :tid of backlog :bid of project id :pid</td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <p class="text-center text-info">Time Entries For tasks</p>
+      </td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>get</td>
+      <td>/api/projects/:pid/backlogs/:bid/tasks/:tid/entries</td>
+      <td>Get all entries of task :tid of backlog :bid of project id :pid</td>
+    </tr>
+    <tr>
+      <td>21</td>
+      <td>get</td>
+      <td>/api/projects/:pid/backlogs/:bid/tasks/:tid/entries/:teid</td>
+      <td>Get details of entry :teid of task :tid of backlog :bid of project id :pid</td>
+    </tr>
+    <tr>
+      <td>22</td>
+      <td>post</td>
+      <td>/api/projects/:pid/backlogs/:bid/tasks/:tid/entries</td>
+      <td>Create entry for task :tid of backlog :bid of project id :pid</td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>put</td>
+      <td>/api/projects/:pid/backlogs/:bid/tasks/:tid/entries/:teid</td>
+      <td>Update entry :teid of task :tid of backlog :bid of project id :pid</td>
+    </tr>
+    <tr>
+      <td>24</td>
+      <td>delete</td>
+      <td>/api/projects/:pid/backlogs/:bid/tasks/:tid/entries/:teid</td>
+      <td>Delete entry :teid of task :tid of backlog :bid of project id :pid</td>
+    </tr>
+  </table>
+  <input type="button" class="btn-small testButton" value="test button">
+  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js'></script>
+</body>
+
+</html>
