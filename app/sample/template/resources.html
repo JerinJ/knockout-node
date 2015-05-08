@@ -1,0 +1,23 @@
+<div class="table-responsive" data-bind="visible: showForm">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email ID</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: resources">
+            <tr>
+                <td data-bind="text: id"></td>
+                <td data-bind="text: firstName"></td>
+                <td data-bind="text: lastName"></td>
+                <td data-bind="text: email"></td>
+                <td><button class="btn btn-primary" data-bind="click: $root.editResouceClick">Edit</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-primary" data-bind="click: createResouceClick">Create Resource</button>
+</div>
