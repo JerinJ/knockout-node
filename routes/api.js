@@ -386,8 +386,9 @@ exports.createResource = function(req, res){
 
   var resource = {
     id: id,
-    name: req.body.name,
-    description:req.body.description
+    firstName: req.body.firstName,
+    lastName:req.body.lastName,
+    email: req.body.email
   };
   resources.push(resource);
   fs.writeFile('data/resources.json', JSON.stringify(resources), 'utf8', function (err) {
