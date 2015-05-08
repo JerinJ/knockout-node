@@ -1,4 +1,4 @@
-# knockout-node
+# Knockout-Node
 This is a knockout based project using node as backend.
 
 Pre-requiste for the project
