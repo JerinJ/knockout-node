@@ -9,5 +9,12 @@
     "express": "3.1.0",
     "ejs": "*",
     "lodash": "*"
+  },
+  "devDependencies": {
+    "jquery": "^2.1.4",
+    "knockout": "^3.3.0",
+    "knottie-sammy": "^0.7.6",
+    "requirejs": "^2.1.17",
+    "underscore": "^1.8.3"
   }
 }

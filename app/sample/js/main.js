@@ -8,10 +8,10 @@ requirejs.config({
 
     paths: {
 
-        'jquery': '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
-        'underscore': '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min',
-        'ko': '//cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min',
-        'sammy': '//cdnjs.cloudflare.com/ajax/libs/sammy.js/0.7.6/sammy.min',
+        'jquery': 'vendors/jquery/dist/jquery.min',
+        'underscore': 'vendors/underscore/underscore.min',
+        'ko': 'vendors/knockout/build/output/knockout-latest',
+        'sammy': 'vendors/knottie-sammy/lib/min/sammy-latest.min',
 
         'templates': '../templates',
         'template': 'utilities/handlebars-template-mapper.min',
