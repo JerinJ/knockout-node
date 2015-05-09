@@ -1,10 +1,14 @@
-define(["sammy", "viewModel/resourceModel"], function(Sammy, resourceModel) {
+define(["sammy", "viewModel/project/projectModel", "viewModel/resource/resourceModel"], function(Sammy, projectModel, resourceModel) {
     return Sammy(function() {
-        console.log('in routes');
-        this.get('/', function() {
-            console.log('in slash');
+        this.get('#projectList', function() {
+            console.log('in projectList');
+            projectModel.createViewModel();
+            projectModel.createUI($('#resourceList'));
+        });
+        this.get('#resourceList', function() {
+            console.log('in resourceList');
             resourceModel.createViewModel();
-            resourceModel.createUI($('#container'));
+            resourceModel.createUI($('#resourceList'));
         });
     });
 });

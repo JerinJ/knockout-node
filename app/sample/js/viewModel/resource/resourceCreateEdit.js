@@ -1,4 +1,4 @@
-define(["jquery", "ko", "text!../../template/resourceCreateEdit.html"], function($, ko, html) {
+define(["jquery", "ko", "text!../../../template/resource/resourceCreateEdit.html"], function($, ko, html) {
     var viewModel = {};
     return {
         createViewModel: function(detail) {

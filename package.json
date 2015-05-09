@@ -11,6 +11,8 @@
     "lodash": "*"
   },
   "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
     "jquery": "^2.1.4",
     "knockout": "^3.3.0",
     "knottie-sammy": "^0.7.6",

@@ -1,18 +1,35 @@
 <!Doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Knockout Node</title>
-    <script data-main="js/main" src="js/vendors/require/require.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/bootstrap/2.3.1/css/bootstrap.min.css">
+	<meta charset="utf-8">
+	<title>Knockout Node</title>
+	<script data-main="js/main" src="js/vendors/require/require.js"></script>
+	<link rel="stylesheet" type="text/css" href="js/vendors/bootstrap/bootstrap.min.css">
 </head>
 
 <body>
 <header>
-    <h1>Knockout Sample Project Using Node Server</h1>
+	<h1 style="text-align: center;">Knockout Sample Project Using Node Server</h1>
 </header>
-<div id="container">
-    <div id="createEdit"></div>
+<div id="container" style="padding: 30px;">
+	<div class="container">
+		<table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td><a href="#projectList">Project List</a></td>
+				</tr>
+				<tr>
+					<td><a href="#resourceList">Resource List</a></td>
+				</tr>
+			</tbody>
+		</table>
+		<div id="projectList">
+			<div id="projectCreateEdit"></div>
+		</div>
+		<div id="resourceList">
+			<div id="resourceCreateEdit"></div>
+		</div>
+	</div>
 </div>
 <footer></footer>
 </body>

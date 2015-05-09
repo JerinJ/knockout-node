@@ -1,11 +1,10 @@
-define(["jquery", "ko", "viewModel/resourceCreateEdit", "text!../../template/resources.html"], function($, ko, resourceCreateEdit, html) {
+define(["jquery", "ko", "viewModel/resource/resourceCreateEdit", "text!../../../template/resource/resources.html"], function($, ko, resourceCreateEdit, html) {
     var viewModel = {};
     return {
         createViewModel: function() {
             viewModel.showForm = ko.observable(true);
             viewModel.resources = ko.observableArray([]);
             viewModel.editResouceClick = function(data) {
-                console.log(data);
                 $.ajax({
                     type: 'GET',
                     url: '/api/resources/'+data.id,
@@ -13,7 +12,7 @@ define(["jquery", "ko", "viewModel/resourceCreateEdit", "text!../../template/res
                     success: function (data) {
                         viewModel.showForm(false);
                         resourceCreateEdit.createViewModel(data);
-                        resourceCreateEdit.createUI($('#createEdit'));
+                        resourceCreateEdit.createUI($('#resourceCreateEdit'));
                     }
                 });
             };
@@ -21,7 +20,7 @@ define(["jquery", "ko", "viewModel/resourceCreateEdit", "text!../../template/res
                 console.log('create resouce');
                 viewModel.showForm(false);
                 resourceCreateEdit.createViewModel();
-                resourceCreateEdit.createUI($('#createEdit'));
+                resourceCreateEdit.createUI($('#resourceCreateEdit'));
             };
             $.ajax({
                 type: 'GET',

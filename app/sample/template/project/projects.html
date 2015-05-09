@@ -1,0 +1,20 @@
+<div class="table-responsive" data-bind="visible: showForm">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>Project Name</th>
+                <th>Project Description</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: projects">
+            <tr>
+                <td data-bind="text: id"></td>
+                <td data-bind="text: name"></td>
+                <td data-bind="text: description"></td>
+                <td><button class="btn btn-primary" data-bind="click: $root.editProjectClick">Edit</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-primary" data-bind="click: createProjectClick">Create Project</button>
+</div>
