@@ -1,0 +1,24 @@
+<div class="table-responsive" data-bind="visible: showForm">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email ID</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: resources">
+            <tr>
+                <td data-bind="text: id"></td>
+                <td data-bind="text: firstName"></td>
+                <td data-bind="text: lastName"></td>
+                <td data-bind="text: email"></td>
+            </tr>
+        </tbody>
+    </table>
+    <select id="addResource" data-bind="foreach: notProjectResources">
+        <option data-bind="text: firstName, value: id"></option>
+    </select>
+    <button class="btn btn-primary" data-bind="click: addResouceClick">Add Resource To Project</button>
+</div>

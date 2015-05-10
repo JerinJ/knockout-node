@@ -43,7 +43,7 @@ app.put ('/api/resources/:rid', api.updateResource);
 
 app.get ('/api/projects/:pid/resources',      api.projectResources);
 app.post('/api/projects/:pid/resources',      api.createProjectResource);
-app.get ('/api/projects/:pid/resources/:id', api.getProjectResource);
+app.get ('/api/projects/:pid/getNotProjectResources',    api.getNotProjectResources);
 // Missing delete call for project and resources services.
 
 app.get ('/api/projects/:pid/backlogs',      api.backlogs);

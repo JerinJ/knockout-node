@@ -3,8 +3,9 @@ define([
         "ko",
         "postal",
         "viewModel/project/projectCreateEdit",
+        "viewModel/project/projectResource",
         "text!../../../template/project/projects.html"
-    ], function($, ko, postal, projectCreateEdit, html) {
+    ], function($, ko, postal, projectCreateEdit, projectResource, html) {
         var viewModel = {};
         var channel = postal.channel();
         return {
@@ -28,6 +29,11 @@ define([
                     viewModel.showForm(false);
                     projectCreateEdit.createViewModel();
                     projectCreateEdit.createUI($('#projectCreateEdit'));
+                };
+                viewModel.getProjectResource = function(data) {
+                    viewModel.showForm(false);
+                    projectResource.createViewModel(data.id);
+                    projectResource.createUI($('#projectResource'));
                 };
                 viewModel.load = function() {
                     $.ajax({

@@ -1,5 +1,6 @@
 var fs = require('fs');
 var _ = require('lodash');
+var $ = require('jquery');
 
 var projects;
 fs.readFile('data/projects.json', 'utf8', function (err, data) {
@@ -273,26 +274,29 @@ exports.projectResources = function(req, res){
   var bks = _.filter(resources, function(bk) {
     return _.findIndex(pbs, {eid: bk.id}) + 1;
   });
+  console.log(typeof bks);
   res.json(bks);
 };
 
-exports.getProjectResource = function(req, res){
+exports.getNotProjectResources = function(req, res){
   var pid = parseInt(req.params.pid);
-  var rid = parseInt(req.params.id);
 
   var pbs = _.filter(projectResources, {'pid': pid});
-  var emps = _.filter(resources, function(emp) {
-    return _.findIndex(pbs, {eid: emp.id}) + 1;
-  });
-
-  var resource = _.filter(emps, {'id': rid});
-
-  if (resource.length > 0) {
-    res.json(resource[0]);
-  }
-  else {
-    res.json({'error': 'Id not found'});
-  }
+  var projectResourcesIndex = [];
+  for (var i = 0; i < pbs.length; i++) {
+    for (var j = 0; j < resources.length; j++) {
+      if(resources[j].id === pbs[i].eid) {
+        projectResourcesIndex.push(j);
+      }
+    };
+  };
+  var result = [];
+  for (var i = 0; i < resources.length; i++) {
+    if(!(_.contains(projectResourcesIndex, i))) {
+      result.push(resources[i]);
+    }
+  };
+  res.json(result);
 };
 
 exports.createProjectResource = function(req, res){

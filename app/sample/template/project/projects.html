@@ -12,7 +12,10 @@
                 <td data-bind="text: id"></td>
                 <td data-bind="text: name"></td>
                 <td data-bind="text: description"></td>
-                <td><button class="btn btn-primary" data-bind="click: $root.editProjectClick">Edit</button></td>
+                <td style="white-space: nowrap;">
+                    <button class="btn btn-primary" data-bind="click: $root.editProjectClick">Edit</button>
+                    <button class="btn btn-primary" data-bind="click: $root.getProjectResource">Resource Detail</button>
+                </td>
             </tr>
         </tbody>
     </table>
