@@ -12,6 +12,8 @@ requirejs.config({
         'underscore': 'vendors/underscore/underscore.min',
         'ko': 'vendors/knockout/build/output/knockout-latest',
         'sammy': 'vendors/knottie-sammy/lib/min/sammy-latest.min',
+        'lodash': 'vendors/lodash/lodash',
+        'postal': 'vendors/postal/lib/postal.min',
 
         'templates': '../templates',
         'template': 'utilities/handlebars-template-mapper.min',
@@ -26,6 +28,10 @@ requirejs.config({
         sammy: {
             deps: ['jquery'],
             exports: 'sammy'
+        },
+        postal: {
+            deps: ['lodash'],
+            exports: 'postal'
         }
     }
 });

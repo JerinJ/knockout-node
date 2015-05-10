@@ -15,7 +15,10 @@
     "grunt-cli": "^0.1.13",
     "jquery": "^2.1.4",
     "knockout": "^3.3.0",
+    "knockout-postbox": "^0.5.1",
     "knottie-sammy": "^0.7.6",
+    "lodash": "^3.8.0",
+    "postal": "^1.0.3",
     "requirejs": "^2.1.17",
     "underscore": "^1.8.3"
   }

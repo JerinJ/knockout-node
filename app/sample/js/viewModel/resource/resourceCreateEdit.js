@@ -1,5 +1,9 @@
-define(["jquery", "ko", "text!../../../template/resource/resourceCreateEdit.html"], function($, ko, html) {
+define(["jquery",
+        "ko",
+        "postal",
+        "text!../../../template/resource/resourceCreateEdit.html"], function($, ko, postal, html) {
     var viewModel = {};
+    var channel = postal.channel();
     return {
         createViewModel: function(detail) {
             viewModel.formVisble = ko.observable(true);
@@ -23,8 +27,9 @@ define(["jquery", "ko", "text!../../../template/resource/resourceCreateEdit.html
                 }
             }
             viewModel.cancel = function() {
-//                viewModel.formVisble(false);
-                location.reload();
+                ko.cleanNode($('#resourceCreateEdit')[0]);
+                $('#resourceCreateEdit').empty();
+                channel.publish("showList");
             };
             viewModel.url = '../api/resources';
             viewModel.type = 'POST';
@@ -46,8 +51,9 @@ define(["jquery", "ko", "text!../../../template/resource/resourceCreateEdit.html
                     dataType: 'json',
                     type: viewModel.type,
                     success: function(data) {
-                        location.reload();
-                        console.log(data);
+                        ko.cleanNode($('#resourceCreateEdit')[0]);
+                        $('#resourceCreateEdit').empty();
+                        channel.publish("showList");
                     },
                     error: function(data) {
                         console.log(data);
