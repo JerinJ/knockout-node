@@ -12,6 +12,8 @@ define([
             createViewModel: function() {
                 viewModel.showForm = ko.observable(true);
                 viewModel.projects = ko.observableArray([]);
+                viewModel.deleteProjectID = ko.observable();
+                viewModel.deleteProjectText = ko.observable();
                 viewModel.editProjectClick = function(data) {
                     $.ajax({
                         type: 'GET',
@@ -44,7 +46,27 @@ define([
                             viewModel.projects(data);
                         }
                     });
-                }
+                };
+                viewModel.deleteProject = function() {
+                    if(viewModel.deleteProjectID()) {
+                        $.ajax({
+                            type: 'DELETE',
+                            url: '/api/projects/'+viewModel.deleteProjectID(),
+                            dataType: 'json',
+                            success: function () {
+                                $('#deleteModal').modal('hide');
+                                viewModel.load();
+                            },
+                            error: function() {
+                                console.log('error');
+                            }
+                        });
+                    }
+                };
+                viewModel.deleteProjectClick = function(data) {
+                    viewModel.deleteProjectID(data.id);
+                    viewModel.deleteProjectText(data.name);
+                };
                 channel.subscribe('showList', function(data) {
                     if(data.view === 'projects') {
                         viewModel.showForm(true);

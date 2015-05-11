@@ -11,6 +11,8 @@ define([
                 viewModel.showForm = ko.observable(true);
                 viewModel.resources = ko.observableArray([]);
                 viewModel.notProjectResources = ko.observableArray([]);
+                viewModel.removeResourceText = ko.observable();
+                viewModel.removeResourceID = ko.observable();
                 viewModel.addResouceClick = function() {
                     if(projectId) {
                         var data = {
@@ -21,7 +23,7 @@ define([
                             type: 'POST',
                             contentType: 'application/json',
                             dataType: 'json',
-                            data: JSON.stringify(data),
+                            data: JSON.stringify(data)
                         }).done(function() {
                             viewModel.load();
                         }).fail(function() {
@@ -53,6 +55,27 @@ define([
                     ko.cleanNode($('#projectResource')[0]);
                     $('#projectResource').empty();
                     channel.publish("showList", {view: 'projects'});
+                };
+                viewModel.removeResourceClick = function(data) {
+                    var resourceName = data.firstName + ' ' + data.lastName;
+                    viewModel.removeResourceText(resourceName);
+                    viewModel.removeResourceID(data.id);
+                };
+                viewModel.removeResource = function() {
+                    if(viewModel.removeResourceID()) {
+                        $.ajax({
+                            type: 'DELETE',
+                            url: '/api/projects/' + projectId + '/resources/' + viewModel.removeResourceID(),
+                            dataType: 'json',
+                            success: function (data) {
+                                viewModel.load();
+                                $('#deleteResourceModal').modal('hide');
+                            },
+                            error: function() {
+                                console.log('erroe');
+                            }
+                        });
+                    }
                 };
                 viewModel.load();
                 

@@ -311,7 +311,7 @@ exports.createProjectResource = function(req, res){
 
 exports.deleteProjectResource = function(req, res) {
     var pid = parseInt(req.params.pid);
-    var eid = parseInt(req.body.eid);
+    var eid = parseInt(req.params.eid);
 
     _.remove(projectResources, function(projectResource) { return (projectResource.pid === pid && projectResource.eid === eid); });
     fs.writeFile('data/projectResources.json', JSON.stringify(projectResources), 'utf8', function (err) {
