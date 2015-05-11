@@ -12,7 +12,7 @@ Clone the project to your local and run the following command in order to start 
 
 This would create a local server running on port 3001
 
-Added CRUD (create-read-update-delete) operations for resource and project using knockout
+Application would be on the following URL
     
     http://localhost:3001/sample/
     
