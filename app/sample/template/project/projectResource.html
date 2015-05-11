@@ -1,4 +1,5 @@
 <div class="table-responsive" data-bind="visible: showForm">
+    <button class="btn btn-primary" data-bind="click: goBack" style="margin-bottom: 25px;">Go Back</button>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -17,7 +18,7 @@
             </tr>
         </tbody>
     </table>
-    <select id="addResource" data-bind="foreach: notProjectResources">
+    <select id="addResource" data-bind="foreach: notProjectResources" style="margin-bottom: 0;">
         <option data-bind="text: firstName, value: id"></option>
     </select>
     <button class="btn btn-primary" data-bind="click: addResouceClick">Add Resource To Project</button>

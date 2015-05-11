@@ -49,6 +49,11 @@ define([
                         });
                     };       
                 };
+                viewModel.goBack = function() {
+                    ko.cleanNode($('#projectResource')[0]);
+                    $('#projectResource').empty();
+                    channel.publish("showList", {view: 'projects'});
+                };
                 viewModel.load();
                 
             },
