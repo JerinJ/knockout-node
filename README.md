@@ -18,4 +18,8 @@ To get the list of service calls created open it on browser using localhost
 
 You will get the list of service calls in a tabular format.
 
-Currently front-end is in starting phase, so if any one likes to check the service calls running one can use postman or fiddler to check the service calls running.
+Added CRU (create-read-update) operations for resource and project using knockout
+    
+    http://localhost:3001/sample/
+    
+    
