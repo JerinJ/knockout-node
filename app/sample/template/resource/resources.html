@@ -6,7 +6,7 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email ID</th>
-                <th>Action</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody data-bind="foreach: resources">
@@ -15,9 +15,31 @@
                 <td data-bind="text: firstName"></td>
                 <td data-bind="text: lastName"></td>
                 <td data-bind="text: email"></td>
-                <td><button class="btn btn-primary" data-bind="click: $root.editResouceClick">Edit</button></td>
+                <td>
+                    <button class="btn btn-primary" data-bind="click: $root.editResouceClick">Edit</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#deleteResourceModal" data-bind="click: $root.deleteResourceClick">Delete Resource</button>
+                </td>
             </tr>
         </tbody>
     </table>
     <button class="btn btn-primary" data-bind="click: createResouceClick">Create Resource</button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteResourceModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="deleteModalLabel">Delete Resource</h4>
+            </div>
+            <div class="modal-body">
+                Do you want to delete Resource "<b data-bind="text: deleteResourceText"></b>" ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-bind="click: deleteResource">Delete</button>
+            </div>
+        </div>
+    </div>
 </div>

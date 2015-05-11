@@ -442,6 +442,24 @@ exports.updateResource = function(req, res){
     }
 };
 
+exports.deleteResource = function(req, res) {
+    var id = parseInt(req.params.rid);
+
+    // Delete from resource form project.
+    _.remove(projectResources, function(projectResource) { return (projectResource.eid === id); });
+    fs.writeFile('data/projectResources.json', JSON.stringify(projectResources), 'utf8', function (err) {
+        if (err) throw err;
+    });
+
+    // Delete resource from resource database
+    _.remove(resources, function(resource) { return (resource.id === id); });
+    fs.writeFile('data/resources.json', JSON.stringify(resources), 'utf8', function (err) {
+        if (err) throw err;
+    });
+
+    res.json({success: true});
+};
+
 //////////////////////////////////////////////////////////////////////////
 //////////////////////// backlogs ////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////

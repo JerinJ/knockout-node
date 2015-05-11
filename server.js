@@ -39,13 +39,13 @@ app.get ('/api/resources',      api.resources);
 app.post('/api/resources',      api.createResource);
 app.get ('/api/resources/:rid', api.getResource);
 app.put ('/api/resources/:rid', api.updateResource);
-// Missing delete call for resources services.
+app.delete('/api/resources/:rid', api.deleteResource);
+
 
 app.get ('/api/projects/:pid/resources',      api.projectResources);
 app.post('/api/projects/:pid/resources',      api.createProjectResource);
 app.delete('/api/projects/:pid/resources/:eid',      api.deleteProjectResource);
 app.get ('/api/projects/:pid/getNotProjectResources',    api.getNotProjectResources);
-// Missing delete call for project and resources services.
 
 app.get ('/api/projects/:pid/backlogs',      api.backlogs);
 app.post('/api/projects/:pid/backlogs',      api.createBacklog);

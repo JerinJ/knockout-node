@@ -11,6 +11,8 @@ define([
             createViewModel: function() {
                 viewModel.showForm = ko.observable(true);
                 viewModel.resources = ko.observableArray([]);
+                viewModel.deleteResourceText = ko.observable();
+                viewModel.deleteResourceID = ko.observable();
                 viewModel.editResouceClick = function(data) {
                     $.ajax({
                         type: 'GET',
@@ -37,6 +39,24 @@ define([
                             viewModel.resources(data);
                         }
                     });
+                };
+                viewModel.deleteResourceClick = function(data) {
+                    var resource = data.firstName + ' ' + data.lastName;
+                    viewModel.deleteResourceText(resource);
+                    viewModel.deleteResourceID(data.id);
+                };
+                viewModel.deleteResource = function() {
+                    if(viewModel.deleteResourceID()) {
+                        $.ajax({
+                            type: 'DELETE',
+                            url: '/api/resources/'+viewModel.deleteResourceID(),
+                            dataType: 'json',
+                            success: function (data) {
+                                viewModel.load();
+                                $('#deleteResourceModal').modal('hide');
+                            }
+                        });
+                    }
                 };
                 channel.subscribe("showList", function() {
                     viewModel.showForm(true);
