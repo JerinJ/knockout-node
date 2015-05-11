@@ -29,11 +29,11 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 
-app.get ('/api/projects',     api.projects);
-app.post('/api/projects',     api.createProject);
-app.get ('/api/projects/:id', api.getProject);
-app.put ('/api/projects/:id', api.updateProject);
-// Missing delete call for project services.
+app.get ('/api/projects',           api.projects);
+app.post('/api/projects',           api.createProject);
+app.get ('/api/projects/:id',       api.getProject);
+app.put ('/api/projects/:id',       api.updateProject);
+app.delete('/api/projects/:id',     api.deleteProject);
 
 app.get ('/api/resources',      api.resources);
 app.post('/api/resources',      api.createResource);
@@ -43,6 +43,7 @@ app.put ('/api/resources/:rid', api.updateResource);
 
 app.get ('/api/projects/:pid/resources',      api.projectResources);
 app.post('/api/projects/:pid/resources',      api.createProjectResource);
+app.delete('/api/projects/:pid/resources',      api.deleteProjectResource);
 app.get ('/api/projects/:pid/getNotProjectResources',    api.getNotProjectResources);
 // Missing delete call for project and resources services.
 

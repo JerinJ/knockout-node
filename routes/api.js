@@ -309,6 +309,17 @@ exports.createProjectResource = function(req, res){
     res.json({success: true});
 };
 
+exports.deleteProjectResource = function(req, res) {
+    var pid = parseInt(req.params.pid);
+    var eid = parseInt(req.body.eid);
+
+    _.remove(projectResources, function(projectResource) { return (projectResource.pid === pid && projectResource.eid === eid); });
+    fs.writeFile('data/projectResources.json', JSON.stringify(projectResources), 'utf8', function (err) {
+        if (err) throw err;
+    });
+    res.json({success: true});
+};
+
 ///////////////////////////////////////////////////////////////////
 //////////////////// projects /////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -363,6 +374,18 @@ exports.updateProject = function(req, res){
     }
 };
 
+exports.deleteProject = function(req, res) {
+    var id = parseInt(req.params.id);
+    _.remove(projects, function(project) { return (project.id === id); });
+    fs.writeFile('data/projects.json', JSON.stringify(projects), 'utf8', function (err) {
+        if (err) throw err;
+    });
+    _.remove(projectResources, function(projectResource) { return (projectResource.pid === id); });
+    fs.writeFile('data/projectResources.json', JSON.stringify(projectResources), 'utf8', function (err) {
+        if (err) throw err;
+    });
+    res.json({success: true});
+};
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////// resources ////////////////////////////////////////
