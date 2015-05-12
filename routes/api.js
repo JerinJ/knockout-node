@@ -325,53 +325,98 @@ exports.deleteProjectResource = function(req, res) {
 ///////////////////////////////////////////////////////////////////
 
 exports.projects = function(req, res){
-    res.json(projects);
+    var db = req.db;
+    var collection = db.get('projectCollection');
+    collection.find({},{},function(e,docs){
+        res.json(docs);
+    });
+//    res.json(projects);
 };
 
 exports.getProject = function(req, res){
     var id = parseInt(req.params.id);
-    var project = _.filter(projects, {'id': id});
+//    var project = _.filter(projects, {'id': id});
 
-    if (project.length > 0) {
-        res.json(project[0]);
-    }
-    else {
-        res.json({'error': 'Id not found'});
-    }
+    var db = req.db;
+    var collection = db.get('projectCollection');
+    collection.find({'id': id},{},function(e,docs){
+        res.json(docs[0]);
+    });
+//
+//    if (project.length > 0) {
+//        res.json(project[0]);
+//    }
+//    else {
+//        res.json({'error': 'Id not found'});
+//    }
 };
 
 exports.createProject = function(req, res){
-    var id = parseInt(projects[projects.length -1].id) + 1;
-
-    var project = {
-        id: id,
-        name: req.body.name,
-        description:req.body.description
-    };
-    projects.push(project);
-    fs.writeFile('data/projects.json', JSON.stringify(projects), 'utf8', function (err) {
-        if (err) throw err;
+//    var id = parseInt(projects[projects.length -1].id) + 1;
+    var db = req.db;
+    var collection = db.get('projectCollection');
+    collection.find({},{},function(e,docs){
+        var id = docs[docs.length - 1].id + 1;
+        var project = {
+            id: id,
+            name: req.body.name,
+            description:req.body.description
+        };
+        collection.insert(project, function(err, result){
+            res.send(
+                (err === null) ? { success: true } : { error: err }
+            );
+        });
     });
 
-    res.json({success: true});
+//    var project = {
+//        id: id,
+//        name: req.body.name,
+//        description:req.body.description
+//    };
+//    projects.push(project);
+//    fs.writeFile('data/projects.json', JSON.stringify(projects), 'utf8', function (err) {
+//        if (err) throw err;
+//    });
+//
+//    res.json({success: true});
 };
 
 exports.updateProject = function(req, res){
     var id = parseInt(req.params.id);
-    var data = req.body;
-    data.id = id;
+//    var data = req.body;
+//    data.id = id;
+//
+//    var project = _.filter(projects, {'id': data.id});
+//    if (project.length > 0) {
+//        _.extend(project[0], data);
+//        fs.writeFile('data/projects.json', JSON.stringify(projects), 'utf8', function (err) {
+//            if (err) throw err;
+//        });
+//        res.json({success: true});
+//    }
+//    else {
+//        res.json({'error': 'Id not found'});
+//    }
 
-    var project = _.filter(projects, {'id': data.id});
-    if (project.length > 0) {
-        _.extend(project[0], data);
-        fs.writeFile('data/projects.json', JSON.stringify(projects), 'utf8', function (err) {
-            if (err) throw err;
-        });
-        res.json({success: true});
-    }
-    else {
-        res.json({'error': 'Id not found'});
-    }
+    var db = req.db;
+    var collection = db.get('projectCollection');
+    collection.update(
+        {
+            id: id
+        },
+        {
+            $set:{
+                name: req.body.name,
+                description: req.body.description
+            }
+        },
+        function(error, result) {
+            res.send(
+                (error === null) ? { success: true } : { error: error }
+            );
+        }
+    );
 };
 
 exports.deleteProject = function(req, res) {
@@ -391,7 +436,12 @@ exports.deleteProject = function(req, res) {
 //////////////////////// resources ////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 exports.resources = function(req, res){
-    res.json(resources);
+    var db = req.db;
+    var collection = db.get('resourceCollection');
+    collection.find({},{},function(e,docs){
+        res.json(docs);
+    });
+//    res.json(resources);
 };
 
 exports.getResource = function(req, res){

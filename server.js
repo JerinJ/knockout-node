@@ -4,27 +4,44 @@
  */
 
 var express = require('express')
-  , routes = require('./routes')
-  , api = require('./routes/api')
-  , http = require('http')
-  , path = require('path');
+    , routes = require('./routes')
+    , api = require('./routes/api')
+    , http = require('http')
+    , path = require('path')
+    , mongo = require('mongodb')
+    , monk = require('monk')
+    , db = monk('localhost:27017/knockout-node')
+    , favicon = require('serve-favicon')
+    , logger = require('morgan')
+    , cookieParser = require('cookie-parser')
+    , bodyParser = require('body-parser');
 
 var app = express();
 
-app.configure(function(){
-  app.set('port', process.env.PORT || 3001);
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'ejs');
-  app.use(express.favicon());
-  app.use(express.logger('dev'));
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'app')));
-});
+app.set('port', process.env.PORT || 3001);
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
 
-app.configure('development', function(){
-  app.use(express.errorHandler());
+// uncomment after placing your favicon in /public
+//app.use(favicon(__dirname + '/app/favicon.ico'));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'app')));
+app.use(express.Router());
+app.use(express.static(path.join(__dirname, 'app')));
+
+// TODO: Add error handling
+//app.use(errorHandler);
+
+
+
+
+// Make our db accessible to our router
+app.use(function(req,res,next){
+    req.db = db;
+    next();
 });
 
 app.get('/', routes.index);
@@ -76,5 +93,5 @@ app.delete('/api/projects/:pid/backlogs/:bid/tasks/:tid/entries/:teid', api.dele
 // regarding payload data that is passed with HTTP request body.
 
 http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
+    console.log("Express server listening on port " + app.get('port'));
 });
