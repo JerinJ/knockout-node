@@ -1,5 +1,6 @@
 @echo off
 set /p mongoPath="Enter directory path of mongo(c:\Program Files\MongoDB): "
+C:
 cd "%mongoPath%\Server\3.0\bin"
 echo 'Connecting mongodb......'
 @echo off
@@ -11,5 +12,5 @@ timeout 10
 set /p repoPath="Enter Path of checkedout repositry(D:\My Repo): "
 echo 'Creating DB......'
 timeout 10
-mongo localhost:27017/knockout-node "%repoPath%\test.js"
+mongo localhost:27017/knockout-node "%repoPath%\script.js"
 pause
