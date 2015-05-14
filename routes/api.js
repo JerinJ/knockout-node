@@ -1,5 +1,6 @@
 var fs = require('fs');
 var _ = require('lodash');
+var $ = require('jquery');
 
 var projects;
 fs.readFile('data/projects.json', 'utf8', function (err, data) {
@@ -268,56 +269,88 @@ exports.updateTask = function(req, res){
 //////////////////////////////////////////////////////////////////////////
 exports.projectResources = function(req, res){
     var pid = parseInt(req.params.pid);
-
-    var pbs = _.filter(projectResources, {'pid': pid});
-    var bks = _.filter(resources, function(bk) {
-        return _.findIndex(pbs, {eid: bk.id}) + 1;
+    var db = req.db;
+    var projectRescollection = db.get('projectResource');
+    var resourceCollection = db.get('resourceCollection');
+    var resourceDetail = [];
+    projectRescollection.find({'pid': pid},{},function(e, projectResources){
+        if(projectResources.length > 0) {
+            _.each(projectResources, function(projectResource, index) {
+                resourceCollection.find({'id': projectResource.eid}, {}, function(e, resource) {
+                    resourceDetail.push(resource[0]);
+                    if(index === projectResources.length-1) {
+                        res.json(resourceDetail);
+                    }
+                });
+            });
+        } else {
+            res.json(resourceDetail);
+        }
     });
-    console.log(typeof bks);
-    res.json(bks);
 };
 
 exports.getNotProjectResources = function(req, res){
     var pid = parseInt(req.params.pid);
-
-    var pbs = _.filter(projectResources, {'pid': pid});
-    var projectResourcesIndex = [];
-    for (var i = 0; i < pbs.length; i++) {
-        for (var j = 0; j < resources.length; j++) {
-            if(resources[j].id === pbs[i].eid) {
-                projectResourcesIndex.push(j);
-            }
-        };
-    };
-    var result = [];
-    for (var i = 0; i < resources.length; i++) {
-        if(!(_.contains(projectResourcesIndex, i))) {
-            result.push(resources[i]);
+    var db = req.db;
+    var projectRescollection = db.get('projectResource');
+    var resourceCollection = db.get('resourceCollection');
+    var resourceId = [];
+    var resourceDetail = [];
+    projectRescollection.find({'pid': pid},{},function(e,projectResources){
+        if(projectResources.length > 0) {
+            _.each(projectResources, function(projectResource, index) {
+                resourceId.push(projectResource.eid);
+                if(index === projectResources.length-1) {
+                    resourceCollection.find({}, {}, function(e, resources) {
+                        _.each(resources, function(resource, index) {
+                            if(!(_.contains(resourceId, resource.id))) {
+                                resourceDetail.push(resource);
+                            }
+                            if(index === resources.length-1) {
+                                res.json(resourceDetail);
+                            }
+                        });
+                    });
+                }
+            });
+        } else {
+            var collection = db.get('resourceCollection');
+            collection.find({},{},function(e,docs){
+                res.json(docs);
+            });
         }
-    };
-    res.json(result);
+    });
 };
 
 exports.createProjectResource = function(req, res){
     var pid = parseInt(req.params.pid);
     var eid = parseInt(req.body.eid);
-
-    projectResources.push({pid:pid, eid: eid});
-    fs.writeFile('data/projectResources.json', JSON.stringify(projectResources), 'utf8', function (err) {
-        if (err) throw err;
+    var db = req.db;
+    var collection = db.get('projectResource');
+    var projectResource = {
+        pid: pid,
+        eid: eid
+    };
+    collection.insert(projectResource, function(err, result){
+        res.send(
+            (err === null) ? { success: true } : { error: err }
+        );
     });
-    res.json({success: true});
+//    collection.save();
 };
 
 exports.deleteProjectResource = function(req, res) {
     var pid = parseInt(req.params.pid);
     var eid = parseInt(req.params.eid);
-
-    _.remove(projectResources, function(projectResource) { return (projectResource.pid === pid && projectResource.eid === eid); });
-    fs.writeFile('data/projectResources.json', JSON.stringify(projectResources), 'utf8', function (err) {
-        if (err) throw err;
+    var db = req.db;
+    var collection = db.get('projectResource');
+    collection.remove({pid: pid, eid: eid}, function(error) {
+        // we have deleted the user
+        res.send(
+            (error === null) ? { success: true } : { error: error }
+        );
     });
-    res.json({success: true});
+//    collection.save();
 };
 
 ///////////////////////////////////////////////////////////////////
@@ -330,29 +363,18 @@ exports.projects = function(req, res){
     collection.find({},{},function(e,docs){
         res.json(docs);
     });
-//    res.json(projects);
 };
 
 exports.getProject = function(req, res){
     var id = parseInt(req.params.id);
-//    var project = _.filter(projects, {'id': id});
-
     var db = req.db;
     var collection = db.get('projectCollection');
     collection.find({'id': id},{},function(e,docs){
         res.json(docs[0]);
     });
-//
-//    if (project.length > 0) {
-//        res.json(project[0]);
-//    }
-//    else {
-//        res.json({'error': 'Id not found'});
-//    }
 };
 
 exports.createProject = function(req, res){
-//    var id = parseInt(projects[projects.length -1].id) + 1;
     var db = req.db;
     var collection = db.get('projectCollection');
     collection.find({},{},function(e,docs){
@@ -368,37 +390,10 @@ exports.createProject = function(req, res){
             );
         });
     });
-
-//    var project = {
-//        id: id,
-//        name: req.body.name,
-//        description:req.body.description
-//    };
-//    projects.push(project);
-//    fs.writeFile('data/projects.json', JSON.stringify(projects), 'utf8', function (err) {
-//        if (err) throw err;
-//    });
-//
-//    res.json({success: true});
 };
 
 exports.updateProject = function(req, res){
     var id = parseInt(req.params.id);
-//    var data = req.body;
-//    data.id = id;
-//
-//    var project = _.filter(projects, {'id': data.id});
-//    if (project.length > 0) {
-//        _.extend(project[0], data);
-//        fs.writeFile('data/projects.json', JSON.stringify(projects), 'utf8', function (err) {
-//            if (err) throw err;
-//        });
-//        res.json({success: true});
-//    }
-//    else {
-//        res.json({'error': 'Id not found'});
-//    }
-
     var db = req.db;
     var collection = db.get('projectCollection');
     collection.update(
@@ -421,15 +416,14 @@ exports.updateProject = function(req, res){
 
 exports.deleteProject = function(req, res) {
     var id = parseInt(req.params.id);
-    _.remove(projects, function(project) { return (project.id === id); });
-    fs.writeFile('data/projects.json', JSON.stringify(projects), 'utf8', function (err) {
-        if (err) throw err;
+    var db = req.db;
+    var collection = db.get('projectCollection');
+    collection.remove({ id: id }, function(error) {
+        // we have deleted the user
+        res.send(
+            (error === null) ? { success: true } : { error: error }
+        );
     });
-    _.remove(projectResources, function(projectResource) { return (projectResource.pid === id); });
-    fs.writeFile('data/projectResources.json', JSON.stringify(projectResources), 'utf8', function (err) {
-        if (err) throw err;
-    });
-    res.json({success: true});
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -441,73 +435,77 @@ exports.resources = function(req, res){
     collection.find({},{},function(e,docs){
         res.json(docs);
     });
-//    res.json(resources);
 };
 
 exports.getResource = function(req, res){
     var id = parseInt(req.params.rid);
-    var resource = _.filter(resources, {'id': id});
-
-    if (resource.length > 0) {
-        console.log('%j', resource[0]);
-        res.json(resource[0]);
-    }
-    else {
-        res.json({'error': 'Id not found'});
-    }
+    var db = req.db;
+    var collection = db.get('resourceCollection');
+    collection.find({'id': id},{},function(e,docs){
+        res.json(docs[0]);
+    });
 };
 
 exports.createResource = function(req, res){
-    var id = parseInt(resources[resources.length -1].id) + 1;
-
-    var resource = {
-        id: id,
-        firstName: req.body.firstName,
-        lastName:req.body.lastName,
-        email: req.body.email
-    };
-    resources.push(resource);
-    fs.writeFile('data/resources.json', JSON.stringify(resources), 'utf8', function (err) {
-        if (err) throw err;
+    var db = req.db;
+    var collection = db.get('resourceCollection');
+    collection.find({},{},function(e,docs){
+        var id = docs[docs.length - 1].id + 1;
+        var resource = {
+            id: id,
+            firstName: req.body.firstName,
+            lastName:req.body.lastName,
+            email: req.body.email
+        };
+        collection.insert(resource, function(err, result){
+            res.send(
+                (err === null) ? { success: true } : { error: err }
+            );
+        });
     });
-
-    res.json({success: true});
 };
 
 exports.updateResource = function(req, res){
     var id = parseInt(req.params.rid);
-    var data = req.body;
-    data.id = id;
-
-    var resource = _.filter(resources, {'id': data.id});
-    if (resource.length > 0) {
-        _.extend(resource[0], data);
-        fs.writeFile('data/resources.json', JSON.stringify(resources), 'utf8', function (err) {
-            if (err) throw err;
-        });
-        res.json({success: true});
-    }
-    else {
-        res.json({'error': 'Id not found'});
-    }
+    var db = req.db;
+    var collection = db.get('resourceCollection');
+    collection.update(
+        {
+            id: id
+        },
+        {
+            $set:{
+                firstName: req.body.firstName,
+                lastName:req.body.lastName,
+                email: req.body.email
+            }
+        },
+        function(error, result) {
+            res.send(
+                (error === null) ? { success: true } : { error: error }
+            );
+        }
+    );
 };
 
 exports.deleteResource = function(req, res) {
     var id = parseInt(req.params.rid);
 
-    // Delete from resource form project.
-    _.remove(projectResources, function(projectResource) { return (projectResource.eid === id); });
-    fs.writeFile('data/projectResources.json', JSON.stringify(projectResources), 'utf8', function (err) {
-        if (err) throw err;
-    });
+    var db = req.db;
+    var projectResourceCollection = db.get('projectResource');
+    var resourceCollection = db.get('resourceCollection');
+    projectResourceCollection.remove({ eid: id }, function(error) {
+        if(error) throw error;
 
-    // Delete resource from resource database
-    _.remove(resources, function(resource) { return (resource.id === id); });
-    fs.writeFile('data/resources.json', JSON.stringify(resources), 'utf8', function (err) {
-        if (err) throw err;
-    });
+        resourceCollection.remove({ id: id }, function(error) {
+            if(error) throw error;
 
-    res.json({success: true});
+            // we have deleted the user
+            res.send(
+                (error === null) ? { success: true } : { error: error }
+            );
+        });
+    });
 };
 
 //////////////////////////////////////////////////////////////////////////

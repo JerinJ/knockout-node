@@ -1,0 +1,11 @@
+resource = [{"id":1001,"firstName":"Addy","lastName":"Osmani","email":"addy.osmani@gamil.com"},{"id":1002,"firstName":"Jeffrey","lastName":"Pfeifer","email":"jeffrey.pfeifer@mediaocean.com"},{"id":1003,"firstName":"Jerin","lastName":"John","email":"jerin.john@test.com"},{"id":1004,"firstName":"Thomas","lastName":"Edison","email":"thomas.edison@company.com"},{"id":1005,"firstName":"Marie","lastName":"Curie","email":"marie.curie@company.com"},{"id":1006,"firstName":"david","lastName":"wells","email":"davidw@mediaocean.com"},{"id":1007,"firstName":"saju","lastName":"sasidharan","email":"sajus@test.com"},{"id":1008,"firstName":"test","lastName":"nair","email":"testn@test.com"},{"id":1009,"lastName":"kamthe","email":"kirank@test.com","firstName":"kiran"}]
+
+db.resourceCollection.insert(resource);
+
+projects = [{"id":101,"name":"Intranet test","description":"<p>Inexhaustibly armadillo fit therefore woolly wow past when.</p>\r<p>Gregariously badger overlaid the decorous.</p>\r"},{"id":102,"name":"Helpdesk","description":"<ul>\r<li>Sem pellentesque taciti at habitant hac fusce adipiscing</li>\r</ul>"},{"id":103,"name":"Test2","description":"description"},{"id":104,"name":"Test Project","description":"Test description"},{"id":105,"name":"jerin","description":"description"},{"id":106,"name":"hello","description":"jerin john jeri john jerin john"},{"id":107,"name":"test","description":"test description is changed"},{"id":108,"name":"test project","description":"asasasassas"}]
+
+db.projectCollection.insert(projects);
+
+projectResource = [{"pid":101,"eid":1001},{"pid":101,"eid":1002},{"pid":101,"eid":1003},{"pid":102,"eid":1003},{"pid":102,"eid":1004},{"pid":101,"eid":1005},{"pid":101,"eid":1007},{"pid":103,"eid":1008},{"pid":104,"eid":1004},{"pid":104,"eid":1005},{"pid":105,"eid":1004},{"pid":105,"eid":1005},{"pid":101,"eid":1009},{"pid":101,"eid":1006},{"pid":107,"eid":1001},{"pid":107,"eid":1007},{"pid":107,"eid":1003},{"pid":107,"eid":1004},{"pid":107,"eid":1002},{"pid":108,"eid":1002},{"pid":108,"eid":1001},{"pid":101,"eid":1004},{"pid":109,"eid":1001},{"pid":109,"eid":1005},{"pid":109,"eid":1002},{"pid":109,"eid":1003},{"pid":109,"eid":1004},{"pid":109,"eid":1006},{"pid":109,"eid":1007},{"pid":109,"eid":1008},{"pid":109,"eid":1009}]
+
+db.projectResource.insert(projectResource);
