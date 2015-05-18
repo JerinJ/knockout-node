@@ -1,7 +1,7 @@
 @echo off
-set /p mongoPath="Enter directory path of mongo(c:\Program Files\MongoDB): "
+set /p mongoPath="Enter directory path of mongo(c:\Program Files\MongoDB\bin): "
 C:
-cd "%mongoPath%\Server\3.0\bin"
+cd "%mongoPath%"
 echo 'Connecting mongodb......'
 @echo off
 set /p dataPath="Enter directory path for data storage(D:\My Data\MongoDB): "
